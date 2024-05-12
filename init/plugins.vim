@@ -153,14 +153,14 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 " Map Ctrl+K to add commenting using NERDCommenter
-nmap <C-K> <Plug>NERDCommenterComment
-vmap <C-K> <Plug>NERDCommenterComment
+" nmap <C-K> <Plug>NERDCommenterComment
+" vmap <C-K> <Plug>NERDCommenterComment
 " Map Ctrl+u to add commenting using NERDCommenter
 nmap <C-U> <Plug>NERDCommenterUncomment
 vmap <C-U> <Plug>NERDCommenterUncomment
 " Map Ctrl+K to toggle commenting using NERDCommenter
-nmap <C-T> <Plug>NERDCommenterToggle
-vmap <C-T> <Plug>NERDCommenterToggle
+nmap <C-K> <Plug>NERDCommenterToggle
+vmap <C-K> <Plug>NERDCommenterToggle
 " Map Ctrl+E to comment from cursor position to EOL using NERDCommenter
 nmap <C-E> <Plug>NERDCommenterToEOL
 vmap <C-E> <Plug>NERDCommenterToEOL

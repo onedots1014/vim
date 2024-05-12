@@ -43,6 +43,8 @@ endif
 set formatoptions+=m
 set formatoptions+=B
 set showcmd
+let mapleader = " "
+set hlsearch
 
 
 "----------------------------------------------------------------------
