@@ -1,4 +1,4 @@
-call plug#begin('~/vimconfig/bundles')
+call plug#begin('~/.vim/bundles')
 Plug 'Yggdroot/LeaderF' ", { 'do': ':LeaderfInstallCExtension' }
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons' "this is not config successful
