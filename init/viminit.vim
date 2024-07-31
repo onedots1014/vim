@@ -45,7 +45,7 @@ set formatoptions+=B
 set showcmd
 let mapleader = " "
 set hlsearch
-
+set incsearch
 
 "----------------------------------------------------------------------
 " map CTRL_HJKL to move cursor in all mode
