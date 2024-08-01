@@ -40,12 +40,18 @@ set splitright
 
 set ignorecase        " Ignore case when searching
 set smartcase         " Override 'ignorecase' if the search pattern contains uppercase characters
-autocmd cursorhold * set nohlsearch  " Disable highlighting after the cursor is still for a while
-noremap n :set hlsearch<cr>n         " Enable highlighting when using 'n'
-noremap N :set hlsearch<cr>N         " Enable highlighting when using 'N'
-noremap / :set hlsearch<cr>/         " Enable highlighting when using '/'
-noremap ? :set hlsearch<cr>?         " Enable highlighting when using '?'
-noremap * *:set hlsearch<cr>         " Enable highlighting when using '*'
+" Disable highlighting after the cursor is still for a while
+" autocmd cursorhold * set nohlsearch
+" Enable highlighting when using 'n'
+noremap n :set hlsearch<cr>n
+" Enable highlighting when using 'N'
+noremap N :set hlsearch<cr>N
+" Enable highlighting when using '/'
+noremap / :set hlsearch<cr>/
+" Enable highlighting when using '?'
+noremap ? :set hlsearch<cr>?
+" Enable highlighting when using '*'
+noremap * *:set hlsearch<cr>
 
 autocmd FileType make set noexpandtab  " Disable expanding tabs in makefiles
 " set autowriteall      " Automatically save before executing a command that expects you to confirm modifications

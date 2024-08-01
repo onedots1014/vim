@@ -5,3 +5,4 @@ exec 'set rtp+=~/.vim'
 
 IncScript config/vimconfig.vim
 IncScript config/plugin.vim
+IncScript config/keymap.vim
