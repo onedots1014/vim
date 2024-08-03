@@ -20,6 +20,6 @@ noremap <Tab>j :res -10<CR>
 
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
-inoremap <C-h> <Right>
-inoremap <C-l> <Left>
+inoremap <C-l> <Right>
+inoremap <C-h> <Left>
 

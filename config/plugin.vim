@@ -62,7 +62,7 @@ let g:NERDCustomDelimiters = {
       \ }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
+let g:NERDCommentEmptyLines = 0
 
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
@@ -160,7 +160,7 @@ endif
 
 let g:Lf_PreviewInPopup = 1
 let g:Lf_PopupPreviewPosition='bottom'
-let g:Lf_QuickSelect = 1
+let g:Lf_QuickSelect = 0
 let g:Lf_GtagsAutoUpdate = 0
 let g:Lf_ShortcutF = '<c-p>'
 " let g:Lf_ShortcutB = '<c-l>'
