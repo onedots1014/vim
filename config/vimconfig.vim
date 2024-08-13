@@ -67,3 +67,9 @@ set undofile          " Enable persistent undo across Vim sessions
 set scrolloff=2       " Keep at least 2 lines above and below the cursor when scrolling
 set showmatch         " Show matching brackets when cursor is over them
 set matchtime=3       " Tenths of a second to show the matching bracket
+" When reopening a file, go to the last known cursor position
+autocmd BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   execute "normal! g`\"" |
+      \ endif
+
