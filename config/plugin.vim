@@ -272,7 +272,8 @@ let g:gutentags_plus_nomap = 1
 nnoremap <Leader>co :copen<CR>
 
 " Hide the quickfix window
-nnoremap <Leader>cc :cclose<CR>
+" nnoremap <Leader>cc :cclose<CR>
+nnoremap <Esc><Esc> :cclose<CR>
 map <C-j> :cn<CR>
 map <C-k> :cp<CR>
 
