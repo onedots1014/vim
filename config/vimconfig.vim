@@ -7,7 +7,7 @@ set backspace=eol,start,indent  " Allow backspacing over everything in insert mo
 set autoindent        " Enable auto-indentation
 set cindent           " Enable C-style indenting
 set winaltkeys=no     " Disable Alt key mappings in Windows
-set nowrap            " Disable line wrapping
+set wrap			  " Enable line wrapping
 set ttimeout          " Enable timeout for key codes
 set ttimeoutlen=50    " Set timeout length to 50 ms
 set cmdheight=1       " Set command-line height to 1 row
