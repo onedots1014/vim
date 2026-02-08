@@ -7,7 +7,7 @@ set backspace=eol,start,indent  " Allow backspacing over everything in insert mo
 set autoindent        " Enable auto-indentation
 set cindent           " Enable C-style indenting
 set winaltkeys=no     " Disable Alt key mappings in Windows
-set wrap			  " Enable line wrapping
+set wrap              " Enable line wrapping
 set ttimeout          " Enable timeout for key codes
 set ttimeoutlen=50    " Set timeout length to 50 ms
 set cmdheight=1       " Set command-line height to 1 row
@@ -34,8 +34,8 @@ set incsearch         " Incremental search
 
 " Enable mouse support
 set mouse=a
-set selection=exclusive
-set selectmode=mouse,key
+set selection=inclusive
+set selectmode=
 set splitright
 
 set ignorecase        " Ignore case when searching
@@ -53,16 +53,27 @@ noremap ? :set hlsearch<cr>?
 " Enable highlighting when using '*'
 noremap * *:set hlsearch<cr>
 
+" Disable search highlighting with <Leader>nh
+nnoremap <Leader>nh :nohlsearch<CR>
+
 autocmd FileType make set noexpandtab  " Disable expanding tabs in makefiles
 " set autowriteall      " Automatically save before executing a command that expects you to confirm modifications
-set pastetoggle=<F9   " Toggle paste mode with F9 to avoid automatic indenting
-
+set pastetoggle=<F9>   " Toggle paste mode with F9 to avoid automatic indenting
 set wildmenu          " Enhanced command-line completion
 set laststatus=2      " Always show status line
 set number            " Show line numbers
-set clipboard=unnamedplus  " Use the system clipboard for copy and paste operations
+if has('unnamedplus')
+    set clipboard=unnamedplus  " Use the system clipboard for copy and paste operations
+else
+    set clipboard=unnamed
+endif
 set nobackup          " Prevent Vim from creating backup files
-set undodir=~/.undo_history/  " Directory for undo history
+set undodir=$HOME/.undo_history/  " Directory for undo history
+
+" Create undo directory if it doesn't exist
+if !isdirectory($HOME . '/.undo_history')
+    call mkdir($HOME . '/.undo_history', 'p')
+endif
 set undofile          " Enable persistent undo across Vim sessions
 set scrolloff=2       " Keep at least 2 lines above and below the cursor when scrolling
 set showmatch         " Show matching brackets when cursor is over them

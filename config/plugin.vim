@@ -25,8 +25,8 @@ let NERDTreeShowHidden=0
 let NERDTreeMinimalUI=1
 let NERDTreeAutoDeleteBuffer=1
 let g:NERDTreeChDirMode=2
-nnoremap <leader>tt :NERDTreeToggle<CR>
-nnoremap <leader>tf :NERDTreeFind<CR>
+nnoremap <leader>nt :NERDTreeToggle<CR>
+nnoremap <leader>nf :NERDTreeFind<CR>
 " Start NERDTree when Vim is started without file arguments.
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
@@ -55,11 +55,11 @@ let g:NERDAltDelims_java = 1
 
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = {
-      \ 'c': {
-      \   'left': '/*',
-      \   'right': '*/'
-      \ }
-      \ }
+	  \ 'c': {
+	  \   'left': '//',
+	  \   'right': ''
+	  \ }
+	  \ }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 0
@@ -89,15 +89,12 @@ vmap <leader>u <Plug>NERDCommenterUncomment
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=0
 "--------------
-" NerdComment end
+" Better whitespace end
 "--------------
 
 "--------------
 " Vim-airline start
 "--------------
-" Enable vim-airline
-let g:airline#enabled = 1
-
 " Customize the theme (optional)
 let g:airline_theme='papercolor'
 " Enable powerline symbols (optional, requires a patched font)
@@ -109,9 +106,7 @@ let g:PaperColor_Theme_Options = {
   \     'default': {
   \       'transparent_background': 1
   \     }
-  \   }
-  \ }
-let g:PaperColor_Theme_Options = {
+  \   },
   \   'language': {
   \     'python': {
   \       'highlight_builtins' : 1
@@ -124,7 +119,6 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
-let g:lightline = { 'colorscheme': 'PaperColor' }
 "------------------------------------------------------------------------------
 " Vim-airline end
 "-------------------------------------------------------------------------------
@@ -136,26 +130,31 @@ let g:Lf_RootMarkers = ['.root']
 let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_WindowHeight = 0.30
 let g:Lf_PopupWidth = 0.75
-let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_CacheDirectory = expand('$HOME/.vim/cache')
 let g:Lf_ShowRelativePath = 1
 let g:Lf_HideHelp = 1
 let g:Lf_NoChdir = 1
 
+" Don't use git ls-files, use internal file scanner to include nested git repos
+let g:Lf_UseVersionControlTool = 0
+
+" Or alternatively, follow symlinks and show hidden files
+" let g:Lf_FollowLinks = 1
+
 let g:Lf_WildIgnore = {
             \ 'dir': ['.svn','.git','.hg'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-			\ }
+            \ }
 
 let g:Lf_MruFileExclude = ['*.so', '*.exe', '*.py[co]', '*.sw?', '~$*', '*.bak', '*.tmp', '*.dll']
 let g:Lf_MruMaxFiles = 2048
 let g:Lf_StlColorscheme = 'airline'
-let g:Lf_PopupColorscheme = 'default'
 let g:Lf_PopupColorscheme = 'gruvbox_default'
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 let g:Lf_MruEnableFrecency = 1
 
 if (exists('*popup_create') && has('patch-8.1.2000')) || has('nvim-0.4')
-	let g:Lf_WindowPosition = 'popup'
+    let g:Lf_WindowPosition = 'popup'
 endif
 
 let g:Lf_PreviewInPopup = 1
@@ -170,36 +169,36 @@ let g:Lf_ShortcutF = '<c-p>'
 " preview
 "----------------------------------------------------------------------
 let g:Lf_PreviewResult = {
-		\ 'File': 1,
-		\ 'Buffer': 0,
-		\ 'Mru': 0,
-		\ 'Tag': 0,
-		\ 'BufTag': 0,
-		\ 'Function': 1,
-		\ 'Line': 1,
-		\ 'Colorscheme': 0,
-		\ 'Rg': 0,
-		\ 'Gtags': 0,
-		\ 'Snippet': 0,
-		\}
+        \ 'File': 1,
+        \ 'Buffer': 0,
+        \ 'Mru': 0,
+        \ 'Tag': 0,
+        \ 'BufTag': 0,
+        \ 'Function': 1,
+        \ 'Line': 1,
+        \ 'Colorscheme': 0,
+        \ 'Rg': 0,
+        \ 'Gtags': 0,
+        \ 'Snippet': 0,
+        \}
 
 "----------------------------------------------------------------------
 " keymap
 "----------------------------------------------------------------------
 if get(g:, 'lf_disable_normal_map', 0) == 0
-	nnoremap <space>ff :<c-u>Leaderf file<cr>
-	nnoremap <space>fe :<c-u>Leaderf filer<cr>
-	nnoremap <space>fb :<c-u>Leaderf buffer<cr>
-	nnoremap <space>fm :<c-u>Leaderf mru<cr>
-	nnoremap <space>fg :<c-u>Leaderf gtags<cr>
-	nnoremap <space>fn :<c-u>Leaderf function<cr>
-	nnoremap <space>ft :<c-u>Leaderf tag<cr>
-	nnoremap <space>fu :<c-u>Leaderf bufTag<cr>
-	nnoremap <space>fs :<c-u>Leaderf self<cr>
-	nnoremap <space>fc :<c-u>Leaderf colorscheme<cr>
-	nnoremap <space>fy :<c-u>Leaderf cmdHistory<cr>
-	nnoremap <space>fj :<c-u>Leaderf jumps<cr>
-	nnoremap <space>fq :<c-u>Leaderf quickfix<cr>
+    nnoremap <leader>ff :<c-u>Leaderf file<cr>
+    nnoremap <leader>fe :<c-u>Leaderf filer<cr>
+    nnoremap <leader>fb :<c-u>Leaderf buffer<cr>
+    nnoremap <leader>fm :<c-u>Leaderf mru<cr>
+    nnoremap <leader>fg :<c-u>Leaderf gtags<cr>
+    nnoremap <leader>fn :<c-u>Leaderf function<cr>
+    nnoremap <leader>ft :<c-u>Leaderf tag<cr>
+    nnoremap <leader>fu :<c-u>Leaderf bufTag<cr>
+    nnoremap <leader>fs :<c-u>Leaderf self<cr>
+    nnoremap <leader>fc :<c-u>Leaderf colorscheme<cr>
+    nnoremap <leader>fy :<c-u>Leaderf cmdHistory<cr>
+    nnoremap <leader>fj :<c-u>Leaderf jumps<cr>
+    nnoremap <leader>fq :<c-u>Leaderf quickfix<cr>
 endif
 
 "--------------
@@ -222,7 +221,7 @@ let g:signify_vcs_cmds = {
             \ 'git': 'git diff --no-color --diff-algorithm=histogram --no-ext-diff -U0 -- %f',
             \}
 " Faster sign updates on CursorHold/CursorHoldI
-set updatetime=100
+set updatetime=300
 
 " mappings to jump to changed blocks
 nmap <leader>gj <plug>(signify-next-hunk)
@@ -234,6 +233,20 @@ nnoremap <leader>gu :SignifyHunkUndo<cr>
 "----------------------------------------------------------------------
 " Signify end
 "----------------------------------------------------------------------
+
+"----------------------------------------------------------------------
+" vim-fugitive
+"----------------------------------------------------------------------
+nnoremap <leader>gs :Git status<cr>
+nnoremap <leader>gb :Git blame<cr>
+nnoremap <leader>gd :Git diff<cr>
+nnoremap <leader>gl :Git log<cr>
+nnoremap <leader>gc :Git commit<cr>
+nnoremap <leader>ga :Git add %<cr>
+"----------------------------------------------------------------------
+" vim-fugitive end
+"----------------------------------------------------------------------
+
 "----------------------------------------------------------------------
 " gutentags start
 "----------------------------------------------------------------------
@@ -245,7 +258,7 @@ let g:gutentags_modules = ['ctags', 'gtags_cscope']
 
 " let g:gutentags_modules = ['ctags', 'gtags_cscope']
 if exists('g:gutentags_cache_dir') == 0
-    let g:gutentags_cache_dir = expand('~/.cache/tags')
+    let g:gutentags_cache_dir = expand('$HOME/.cache/tags')
 endif
 
 if !isdirectory(g:gutentags_cache_dir)
@@ -262,7 +275,7 @@ let g:gutentags_define_advanced_commands = 1
 
 " let g:gutentags_define_advanced_commands = 1
 
-if has('win32') || has('win16') || has('win64') || has('win95')
+if has('win32')
     let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 endif
 
@@ -273,7 +286,7 @@ nnoremap <Leader>co :copen<CR>
 
 " Hide the quickfix window
 " nnoremap <Leader>cc :cclose<CR>
-nnoremap <Esc><Esc> :cclose<CR>
+" nnoremap <Esc><Esc> :cclose<CR>
 map <C-j> :cn<CR>
 map <C-k> :cp<CR>
 
@@ -304,33 +317,33 @@ noremap <silent> <leader>jz :GscopeFind z <C-R><C-W><cr>
 " Preview start
 "----------------------------------------------------------------------
 autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
-autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>"
+autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 "----------------------------------------------------------------------
 " preview file
 "----------------------------------------------------------------------
 function! s:PreviewFile(...)
-	if a:0 == 0
-		return
-	endif
-	let filename = expand(a:{a:0})
-	let nohl = 0
-	let cmd = ''
-	for i in range(a:0 - 1)
-		let item = a:{i + 1}
-		let head = strpart(item, 0, 2)
-		if head == '+:'
-			let cmd = strpart(item, 2)
-		elseif head == '++'
-			if item == '++nohl'
-				let nohl = 1
-			endif
-		endif
-	endfor
-	if !filereadable(filename)
-		call preview#errmsg('ERROR: preview: file not find "'. filename.'"')
-		return
-	endif
-	call preview#preview_edit(-1, filename, -1, cmd, nohl)
+    if a:0 == 0
+        return
+    endif
+    let filename = expand(a:{a:0})
+    let nohl = 0
+    let cmd = ''
+    for i in range(a:0 - 1)
+        let item = a:{i + 1}
+        let head = strpart(item, 0, 2)
+        if head == '+:'
+            let cmd = strpart(item, 2)
+        elseif head == '++'
+            if item == '++nohl'
+                let nohl = 1
+            endif
+        endif
+    endfor
+    if !filereadable(filename)
+        call preview#errmsg('ERROR: preview: file not find "'. filename.'"')
+        return
+    endif
+    call preview#preview_edit(-1, filename, -1, cmd, nohl)
 endfunc
 
 
@@ -342,8 +355,8 @@ command! -nargs=0 PreviewClose call preview#preview_close()
 " preview tag
 "----------------------------------------------------------------------
 function! s:PreviewTag(...)
-	let tagname = (a:0 > 0)? a:1 : expand('<cword>')
-	call preview#preview_tag(tagname)
+    let tagname = (a:0 > 0)? a:1 : expand('<cword>')
+    call preview#preview_tag(tagname)
 endfunc
 
 command! -nargs=? PreviewTag call s:PreviewTag(<f-args>)
@@ -353,11 +366,11 @@ command! -nargs=? PreviewTag call s:PreviewTag(<f-args>)
 " preview signature
 "----------------------------------------------------------------------
 function! s:PreviewSignature(bang, ...)
-	let funcname = (a:0 > 0)? a:1 : ""
-	if a:bang
-		let funcname = '<?>'
-	endif
-	call preview#function_echo(funcname, 0)
+    let funcname = (a:0 > 0)? a:1 : ""
+    if a:bang
+        let funcname = '<?>'
+    endif
+    call preview#function_echo(funcname, 0)
 endfunc
 
 command! -nargs=? -bang PreviewSignature call s:PreviewSignature(<bang>0, <f-args>)
@@ -367,12 +380,12 @@ command! -nargs=? -bang PreviewSignature call s:PreviewSignature(<bang>0, <f-arg
 " preview tags in quickfix
 "----------------------------------------------------------------------
 function! s:PreviewList(bang, ...)
-	let name = (a:0 > 0)? a:1 : expand('<cword>')
-	let size = preview#quickfix_list(name, a:bang, &filetype)
-	if size > 0
-		redraw | echo "" | redraw
-		echo "PreviewList: ". size . " tags listed."
-	endif
+    let name = (a:0 > 0)? a:1 : expand('<cword>')
+    let size = preview#quickfix_list(name, a:bang, &filetype)
+    if size > 0
+        redraw | echo "" | redraw
+        echo "PreviewList: ". size . " tags listed."
+    endif
 endfunc
 
 command! -nargs=? -bang PreviewList call s:PreviewList(<bang>0, <f-args>)
@@ -382,11 +395,11 @@ command! -nargs=? -bang PreviewList call s:PreviewList(<bang>0, <f-args>)
 " preview scroll
 "----------------------------------------------------------------------
 function! s:PreviewScroll(bang, offset)
-	if a:bang == 0
-		call preview#preview_scroll(str2nr(a:offset))
-	else
-		call preview#previous_scroll(str2nr(a:offset))
-	endif
+    if a:bang == 0
+        call preview#preview_scroll(str2nr(a:offset))
+    else
+        call preview#previous_scroll(str2nr(a:offset))
+    endif
 endfunc
 
 command! -nargs=1 -bang PreviewScroll call s:PreviewScroll(<bang>0, <f-args>)
@@ -403,8 +416,8 @@ command! -nargs=1 PreviewGoto call preview#preview_goto(<q-args>)
 " preview files for quickfix
 "----------------------------------------------------------------------
 function! s:PreviewQuickfix(...)
-	let linenr = (a:0 > 0)? a:1 : 0
-	call preview#preview_quickfix(linenr)
+    let linenr = (a:0 > 0)? a:1 : 0
+    call preview#preview_quickfix(linenr)
 endfunc
 
 
