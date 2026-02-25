@@ -41,8 +41,11 @@ let g:NERDTreeChDirMode=2
 nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 " Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+augroup nerdtree_auto
+    autocmd!
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+augroup END
 "----------------------------
 " NERDTree end
 "----------------------------
@@ -112,8 +115,6 @@ let g:strip_whitespace_on_save=0
 let g:airline_theme='papercolor'
 " Enable powerline symbols (optional, requires a patched font)
 let g:airline_powerline_fonts = 1
-set background=dark
-colorscheme PaperColor
 let g:PaperColor_Theme_Options = {
   \   'theme': {
   \     'default': {
@@ -132,6 +133,8 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
+set background=dark
+colorscheme PaperColor
 "------------------------------------------------------------------------------
 " Vim-airline end
 "-------------------------------------------------------------------------------
@@ -185,7 +188,7 @@ set updatetime=300
 " mappings to jump to changed blocks
 nmap <leader>gj <plug>(signify-next-hunk)
 nmap <leader>gk <plug>(signify-prev-hunk)
-nnoremap <leader>gd :SignifyDiff<cr>
+nnoremap <leader>gD :SignifyDiff<cr>
 nnoremap <leader>gp :SignifyHunkDiff<cr>
 nnoremap <leader>gu :SignifyHunkUndo<cr>
 
@@ -215,7 +218,6 @@ let g:gutentags_add_default_project_roots = 0
 let g:gutentags_exclude_git = 1
 let g:gutentags_modules = ['ctags', 'gtags_cscope']
 
-" let g:gutentags_modules = ['ctags', 'gtags_cscope']
 if exists('g:gutentags_cache_dir') == 0
     let g:gutentags_cache_dir = expand('$HOME/.cache/tags')
 endif
@@ -224,15 +226,12 @@ if !isdirectory(g:gutentags_cache_dir)
     call mkdir(g:gutentags_cache_dir, 'p')
 endif
 
-let g:gutentags_ctags_extra_args = []
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 let g:gutentags_auto_add_gtags_cscope =0
 let g:gutentags_define_advanced_commands = 1
-
-" let g:gutentags_define_advanced_commands = 1
 
 if has('win32')
     let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
@@ -243,9 +242,6 @@ let g:gutentags_plus_nomap = 1
 " Show the quickfix window
 nnoremap <Leader>co :copen<CR>
 
-" Hide the quickfix window
-" nnoremap <Leader>cc :cclose<CR>
-" nnoremap <Esc><Esc> :cclose<CR>
 map <C-j> :cn<CR>
 map <C-k> :cp<CR>
 
@@ -253,7 +249,6 @@ map <C-k> :cp<CR>
 noremap <silent> <leader>js mA:GscopeFind s <C-R><C-W><cr>
 " Find symbol definition under cursor
 noremap <silent> <leader>jg :GscopeFind g <C-R><C-W><cr>
-" noremap <silent> <C-]> : GscopeFind g <C-R><C-W><cr>
 " Functions called by this function
 noremap <silent> <leader>jc :GscopeFind c <C-R><C-W><cr>
 " Functions calling this function
@@ -275,8 +270,11 @@ noremap <silent> <leader>jz :GscopeFind z <C-R><C-W><cr>
 "----------------------------------------------------------------------
 " Preview start
 "----------------------------------------------------------------------
-autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
-autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
+augroup preview_quickfix
+    autocmd!
+    autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
+    autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
+augroup END
 "----------------------------------------------------------------------
 " preview file
 "----------------------------------------------------------------------

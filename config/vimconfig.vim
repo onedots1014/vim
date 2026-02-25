@@ -74,7 +74,9 @@ noremap * *:set hlsearch<cr>
 " Disable search highlighting with <Leader>nh
 nnoremap <Leader>nh :nohlsearch<CR>
 
-autocmd FileType make set noexpandtab  " Disable expanding tabs in makefiles
+augroup vimconfig
+    autocmd!
+    autocmd FileType make set noexpandtab  " Disable expanding tabs in makefiles
 " set autowriteall      " Automatically save before executing a command that expects you to confirm modifications
 if !g:is_nvim
     set pastetoggle=<F9>   " Toggle paste mode with F9 to avoid automatic indenting
@@ -103,8 +105,9 @@ set scrolloff=2       " Keep at least 2 lines above and below the cursor when sc
 set showmatch         " Show matching brackets when cursor is over them
 set matchtime=3       " Tenths of a second to show the matching bracket
 " When reopening a file, go to the last known cursor position
-autocmd BufReadPost *
-      \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   execute "normal! g`\"" |
-      \ endif
+    autocmd BufReadPost *
+          \ if line("'\"") > 1 && line("'\"") <= line("$") |
+          \   execute "normal! g`\"" |
+          \ endif
+augroup END
 

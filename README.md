@@ -133,6 +133,7 @@ Leader key: `Space`
 | `<Leader>gj` | Next hunk |
 | `<Leader>gk` | Previous hunk |
 | `<Leader>gp` | Preview hunk diff |
+| `<Leader>gD` | Signify diff |
 | `<Leader>gu` | Undo hunk |
 | `<Leader>gs` | Git status |
 | `<Leader>gb` | Git blame |
