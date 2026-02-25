@@ -56,6 +56,8 @@ vim-plug will be downloaded automatically on first launch.
 | vim-gutentags | Auto tag management |
 | gutentags_plus | Gtags/cscope support |
 | vim-preview | Preview window |
+| copilot.vim | AI code completion (requires Copilot subscription) |
+| codecompanion.nvim | AI chat/actions (Neovim only, uses Copilot as backend) |
 
 ### 5. Key Mappings
 
@@ -156,3 +158,12 @@ Leader key: `Space`
 | `<Leader>co` | Open quickfix |
 | `Ctrl+j` | Next quickfix item |
 | `Ctrl+k` | Previous quickfix item |
+
+#### AI
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+e` | Accept Copilot suggestion (insert mode) |
+| `<Leader>ai` | Toggle AI chat (Neovim only) |
+| `<Leader>aa` | AI actions menu (Neovim only) |
+| `<Leader>ae` | Inline AI prompt (Neovim only) |

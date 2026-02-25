@@ -27,6 +27,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
 Plug 'skywind3000/vim-preview'
+Plug 'github/copilot.vim'
+if g:is_nvim
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'olimorris/codecompanion.nvim'
+endif
 call plug#end()
 
 "---------------------------
@@ -382,4 +387,30 @@ command! -nargs=? PreviewQuickfix call s:PreviewQuickfix(<f-args>)
 
 "----------------------------------------------------------------------
 " Preview end
+"----------------------------------------------------------------------
+
+"----------------------------------------------------------------------
+" Copilot
+"----------------------------------------------------------------------
+let g:copilot_no_tab_map = v:true
+inoremap <silent><script><expr> <C-e> copilot#Accept("\<CR>")
+let g:copilot_filetypes = {
+      \ '*': v:true,
+      \ }
+"----------------------------------------------------------------------
+" Copilot end
+"----------------------------------------------------------------------
+
+"----------------------------------------------------------------------
+" CodeCompanion (Neovim only)
+"----------------------------------------------------------------------
+if g:is_nvim
+    nnoremap <leader>ai :CodeCompanionChat Toggle<cr>
+    vnoremap <leader>ai :CodeCompanionChat Toggle<cr>
+    nnoremap <leader>aa :CodeCompanionActions<cr>
+    vnoremap <leader>aa :CodeCompanionActions<cr>
+    nnoremap <leader>ae :CodeCompanion<space>
+endif
+"----------------------------------------------------------------------
+" CodeCompanion end
 "----------------------------------------------------------------------
