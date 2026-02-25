@@ -1,18 +1,35 @@
 let mapleader=" "
 
-set nocompatible      " Use Vim defaults instead of Vi defaults
+if !g:is_nvim
+    set nocompatible      " Use Vim defaults instead of Vi defaults
+endif
 syntax on             " Enable syntax highlighting
+
+" Enable true color support
+if has('termguicolors')
+    if !g:is_nvim
+        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    endif
+    set termguicolors
+endif
 
 set backspace=eol,start,indent  " Allow backspacing over everything in insert mode
 set autoindent        " Enable auto-indentation
 set cindent           " Enable C-style indenting
-set winaltkeys=no     " Disable Alt key mappings in Windows
+if exists('+winaltkeys')
+    set winaltkeys=no     " Disable Alt key mappings in Windows
+endif
 set wrap              " Enable line wrapping
-set ttimeout          " Enable timeout for key codes
-set ttimeoutlen=50    " Set timeout length to 50 ms
+if !g:is_nvim
+    set ttimeout          " Enable timeout for key codes
+    set ttimeoutlen=50    " Set timeout length to 50 ms
+endif
 set cmdheight=1       " Set command-line height to 1 row
 set ruler             " Show line and column number in the status line
-set nopaste           " Disable automatic pasting
+if !g:is_nvim
+    set nopaste           " Disable automatic pasting
+endif
 set display=lastline  " Show as much as possible of the last line
 
 set shiftwidth=4      " Set indentation width to 4 spaces
@@ -37,6 +54,7 @@ set mouse=a
 set selection=inclusive
 set selectmode=
 set splitright
+set fillchars+=vert:¦
 
 set ignorecase        " Ignore case when searching
 set smartcase         " Override 'ignorecase' if the search pattern contains uppercase characters
@@ -58,7 +76,9 @@ nnoremap <Leader>nh :nohlsearch<CR>
 
 autocmd FileType make set noexpandtab  " Disable expanding tabs in makefiles
 " set autowriteall      " Automatically save before executing a command that expects you to confirm modifications
-set pastetoggle=<F9>   " Toggle paste mode with F9 to avoid automatic indenting
+if !g:is_nvim
+    set pastetoggle=<F9>   " Toggle paste mode with F9 to avoid automatic indenting
+endif
 set wildmenu          " Enhanced command-line completion
 set laststatus=2      " Always show status line
 set number            " Show line numbers
@@ -68,12 +88,16 @@ else
     set clipboard=unnamed
 endif
 set nobackup          " Prevent Vim from creating backup files
-set undodir=$HOME/.undo_history/  " Directory for undo history
 
-" Create undo directory if it doesn't exist
-if !isdirectory($HOME . '/.undo_history')
-    call mkdir($HOME . '/.undo_history', 'p')
+if g:is_nvim
+    let s:undodir = stdpath('data') . '/undo'
+else
+    let s:undodir = $HOME . '/.undo_history'
 endif
+if !isdirectory(s:undodir)
+    call mkdir(s:undodir, 'p')
+endif
+let &undodir = s:undodir
 set undofile          " Enable persistent undo across Vim sessions
 set scrolloff=2       " Keep at least 2 lines above and below the cursor when scrolling
 set showmatch         " Show matching brackets when cursor is over them

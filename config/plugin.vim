@@ -1,20 +1,33 @@
-" plugin install
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'vim-airline/vim-airline'
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Yggdroot/LeaderF'
-Plugin 'mhinz/vim-signify'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'skywind3000/gutentags_plus'
-Plugin 'skywind3000/vim-preview'
-call vundle#end()
+" plugin install (vim-plug)
+let s:home = g:vim_home
+let s:plugdir = s:home . '/plugged'
+
+" Auto-install vim-plug if not found
+let s:plug_file = s:home . '/autoload/plug.vim'
+if empty(glob(s:plug_file))
+    if g:is_win
+        silent execute '!powershell -command "New-Item -Path \"' . s:plug_file . '\" -ItemType File -Force; (New-Object Net.WebClient).DownloadFile(''https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'', ''' . s:plug_file . ''')"'
+    else
+        silent execute '!curl -fLo ' . shellescape(s:plug_file) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    endif
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin(s:plugdir)
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'vim-airline/vim-airline'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
+Plug 'skywind3000/vim-preview'
+call plug#end()
 
 "---------------------------
 " NERDTree start
@@ -124,85 +137,31 @@ let g:PaperColor_Theme_Options = {
 "-------------------------------------------------------------------------------
 
 "--------------
-" LeaderF start
+" fzf.vim start
 "--------------
-let g:Lf_RootMarkers = ['.root']
-let g:Lf_WorkingDirectoryMode = 'Ac'
-let g:Lf_WindowHeight = 0.30
-let g:Lf_PopupWidth = 0.75
-let g:Lf_CacheDirectory = expand('$HOME/.vim/cache')
-let g:Lf_ShowRelativePath = 1
-let g:Lf_HideHelp = 1
-let g:Lf_NoChdir = 1
+let g:fzf_layout = { 'down': '~30%' }
+let g:fzf_preview_window = ['right,50%', 'ctrl-/']
 
-" Don't use git ls-files, use internal file scanner to include nested git repos
-let g:Lf_UseVersionControlTool = 0
-
-" Or alternatively, follow symlinks and show hidden files
-" let g:Lf_FollowLinks = 1
-
-let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg'],
-            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-            \ }
-
-let g:Lf_MruFileExclude = ['*.so', '*.exe', '*.py[co]', '*.sw?', '~$*', '*.bak', '*.tmp', '*.dll']
-let g:Lf_MruMaxFiles = 2048
-let g:Lf_StlColorscheme = 'airline'
-let g:Lf_PopupColorscheme = 'gruvbox_default'
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-let g:Lf_MruEnableFrecency = 1
-
-if (exists('*popup_create') && has('patch-8.1.2000')) || has('nvim-0.4')
-    let g:Lf_WindowPosition = 'popup'
+" Use rg for :Rg if available, ignore .git
+if executable('rg')
+    let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob "!.git"'
 endif
 
-let g:Lf_PreviewInPopup = 1
-let g:Lf_PopupPreviewPosition='bottom'
-let g:Lf_QuickSelect = 0
-let g:Lf_GtagsAutoUpdate = 0
-let g:Lf_ShortcutF = '<c-p>'
-" let g:Lf_ShortcutB = '<c-l>'
-
-
-"----------------------------------------------------------------------
-" preview
-"----------------------------------------------------------------------
-let g:Lf_PreviewResult = {
-        \ 'File': 1,
-        \ 'Buffer': 0,
-        \ 'Mru': 0,
-        \ 'Tag': 0,
-        \ 'BufTag': 0,
-        \ 'Function': 1,
-        \ 'Line': 1,
-        \ 'Colorscheme': 0,
-        \ 'Rg': 0,
-        \ 'Gtags': 0,
-        \ 'Snippet': 0,
-        \}
-
-"----------------------------------------------------------------------
 " keymap
-"----------------------------------------------------------------------
-if get(g:, 'lf_disable_normal_map', 0) == 0
-    nnoremap <leader>ff :<c-u>Leaderf file<cr>
-    nnoremap <leader>fe :<c-u>Leaderf filer<cr>
-    nnoremap <leader>fb :<c-u>Leaderf buffer<cr>
-    nnoremap <leader>fm :<c-u>Leaderf mru<cr>
-    nnoremap <leader>fg :<c-u>Leaderf gtags<cr>
-    nnoremap <leader>fn :<c-u>Leaderf function<cr>
-    nnoremap <leader>ft :<c-u>Leaderf tag<cr>
-    nnoremap <leader>fu :<c-u>Leaderf bufTag<cr>
-    nnoremap <leader>fs :<c-u>Leaderf self<cr>
-    nnoremap <leader>fc :<c-u>Leaderf colorscheme<cr>
-    nnoremap <leader>fy :<c-u>Leaderf cmdHistory<cr>
-    nnoremap <leader>fj :<c-u>Leaderf jumps<cr>
-    nnoremap <leader>fq :<c-u>Leaderf quickfix<cr>
-endif
+nnoremap <c-p>      :Files<cr>
+nnoremap <leader>ff :Files<cr>
+nnoremap <leader>fb :Buffers<cr>
+nnoremap <leader>fm :History<cr>
+nnoremap <leader>ft :Tags<cr>
+nnoremap <leader>fu :BTags<cr>
+nnoremap <leader>fl :Lines<cr>
+nnoremap <leader>fg :Rg<cr>
+nnoremap <leader>fc :Commands<cr>
+nnoremap <leader>fy :History:<cr>
+nnoremap <leader>fh :Helptags<cr>
 
 "--------------
-" LeaderF end
+" fzf.vim end
 "--------------
 
 "----------------------------------------------------------------------

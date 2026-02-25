@@ -23,7 +23,11 @@ inoremap <C-j> <Down>
 inoremap <C-l> <Right>
 inoremap <C-h> <Left>
 " 打开终端快捷键：<Leader>t
-nnoremap <silent> <Leader>t :botright term<CR>
+if g:is_nvim
+    nnoremap <silent> <Leader>t :botright split \| terminal<CR>
+else
+    nnoremap <silent> <Leader>t :botright term<CR>
+endif
 
 " 定义快捷键 qt 强制退出终端模式并关闭终端窗口
 tnoremap <Leader>qt <C-\><C-n>:q!<CR>
