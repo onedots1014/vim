@@ -1,0 +1,3 @@
+" Linux/macOS Vim entry point
+" Copy or symlink to: ~/.vimrc
+so ~/.vim/vim/init.vim
